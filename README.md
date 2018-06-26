@@ -70,7 +70,7 @@ Well, the naming sucks, but here's what they are:
 ### Creating a QueueJob
 `QueueJob` is a simple protocol to which anything can be conformed. In my experience, conforming to a `struct` is the most convenient and, likely, the more swifty way of doing things. Because Swift 4 allows you to typealias existing structs/classes, and furthermore allows you to add extensions to those typealiases, it's easiest to create a "base" `QueueJob` for your project. You can use the following as a template:
 
-```Swift
+```swift
 import Foundation
 import Cute
 
@@ -84,7 +84,7 @@ struct CuteJob: QueueJob {
 
 With the above "base" `QueueJob`, we can easily create other "types" of jobs. For example, if we wanted to define a `QueueJob` used for uploading a FHIR Observation to a server, we could do the following:
 
-```Swift
+```swift
 import Foundation
 import FireKit
 
@@ -108,7 +108,7 @@ extension ObservationUploadJob {
 
 We can now create an `ObservationUploadJob` by simply doing the following:
 
-```Swift
+```swift
 import Foundation
 import FireKit
 
@@ -124,7 +124,7 @@ We now have a `QueueJob` of type `ObservationUploadJob`, complete with serialize
 ### Creating a JobQueue
 With the `ObservationUploadJob` defined, how do we create the `JobQueue` that will accept that type of job? Easy - just do the following:
 
-```Swift
+```swift
 import Foundation
 import Cute
 
@@ -134,7 +134,7 @@ let observationUploadQueue = JobQueue(handling: ObservationUploadJob.self,
 
 That's it. We now have a JobQueue of type `JobQueue<ObservationUploadJob>` that will only accept jobs of that defined type. As such, we can submit our job to the queue by calling the `add(_: [ObservationUploadJob])` method on the queue:
 
-```Swift
+```swift
 observationUploadQueue.add([job])
 ```
 Creating a basic `JobQueue` like the one above creates an _in-memory only_ JobQueue. This means as soon as the queue goes out of scope, any jobs contained in the Queue will be lost. This might be okay in some use cases, but you may want to persist those jobs between scope or app-cycles. For that we turn to `JobPersister`s.
@@ -154,7 +154,7 @@ If a `JobQueue` is provided a `JobPersister`, then the `JobQueue` will attempt t
 
 So if we wanted the queue we created earlier to persist its jobs, we can either create and assign it our own `JobPersister` (if we want to persist the job somewhere other than the local FileSystem), or simply create an instance of `FileBasedPersister` and assign it.
 
-```Swift
+```swift
 import Foundation
 import Cute
 
@@ -172,7 +172,7 @@ Our `observationUploadQueue` will now persist any added, removed, or cancelled j
 
 If we want our `observationUploadQueue` to load jobs and add them on `init`, we would simply pass the persister at the time of initialization:
 
-```Swift
+```swift
 import Foundation
 import Cute
 
@@ -186,7 +186,7 @@ let observationUploadQueue = try JobQueue(handling: ObservationUploadJob.self,
 ### Processing a JobQueue
 By default JobQueues are in-memory only queues which don't actually do any processing. They simply maintain a First-In-First-Out data buffer which must be manually maintained. This can be useful in, say, a function which requires short controlled processing, but for background processing it stinks. Enter the `JobProcessor<JobType: QueueJob>`.
 
-```Swift
+```swift
 public protocol JobProcessor: class {
     associatedtype JobType: QueueJob
     
@@ -198,7 +198,7 @@ public protocol JobProcessor: class {
 
 To continue our Observation Upload example, we could create a `JobProcessor` with the following (somewhat pseudo) code:
 
-```Swift
+```swift
 class ObservationUploadJobProcessor: JobProcessor {
     typealias JobType = ObservationUploadJob
 
@@ -253,7 +253,7 @@ The above processor attempts to invoke the appropriate function on some mythical
 
 You can assign a `JobQueue` any `JobProcessor` which processes the same type of job as the `JobQueue`. 
 
-```Swift
+```swift
 import Foundation
 import Cute
 
@@ -268,7 +268,7 @@ observationUploadQueue.processor = AnyJobProcessor(ObservationUploadJobProcessor
 
 However, recall that `JobQueue` have `start` and `stop` methods. These methods control whether or not a `JobQueue` will forward its jobs to the assigned JobProcessor. 
 
-```Swift
+```swift
 ...
 observationUploadQueue.processor = AnyJobProcessor(ObservationUploadJobProcessor(server: MyObservationServer())
 observationUploadQueue.start()
@@ -277,7 +277,7 @@ By calling `start` above, we tell our ObservationUploadQueue to start forwarding
 
 Conversely, we can tell the queue to stop sending jobs to its assigned processor by calling the queue's `stop` method.
 
-```Swift
+```swift
 ...
 observationUploadQueue.stop()
 ```
@@ -288,7 +288,7 @@ The `start()` and `stop()` functions are important, and can be useful if we need
 ### Job Retry Strategies
 When a `JobQueue` forwards a job to a `JobProcessor` for processing, the `JobQueue` will first _`remove()`_ that job from the queue. Any jobs that fail to process, by default, _will not be re-added to the queue_. However, `JobQueue`s _do_ provide a means of re-trying a failed job using a `JobRetryStrategy<QueueJob>`.
 
-```Swift 4
+```swift 4
 public protocol JobRetryStrategy {
     
     /// Instructs how to retry the failed `job` on the provided `queue`
@@ -326,7 +326,7 @@ The `BackoffRetryStrategy` accomplishes the above by performing the following st
 
 You can define a re-try strategy for a `JobQueue` by assigning it's `retryStrategy` property to an instance of anything that conforms to the `JobRetryStrategy` protocol.
 
-```Swift
+```swift
 observationUploadQueue.retryStrategy = BackoffRetryStrategy(maxBackoff: 60*60) // waits a max 1 hour
 ```
 
@@ -341,7 +341,7 @@ A `JobQueue` fires notifications to observers during key events. Specifically, o
 
 An observer receives a notification by calling a `JobQueue`'s `observe` function and passing it a block. 
 
-```Swift
+```swift
 let token = observationUploadQueue.observe { queue, jobs, event in
     switch event {
         case .added: 
