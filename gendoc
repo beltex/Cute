@@ -3,7 +3,7 @@
 jazzy \
 	--source-directory . \
 	--readme README.md \
-	-o ./docs \
+	-o ./docs/jazzy \
 	-a 'Ryan Baldwin' \
 	-u 'https://www.github.com/ryanbaldwin' \
 	-m 'Cute' \

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>FileBasedPersister Class Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Class/FileBasedPersister" class="dashAnchor"></a>
+    <a title="FileBasedPersister Class Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Cute Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/ryanbaldwin/Cute"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">Cute Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        FileBasedPersister Class Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/AnyJobPersister.html">AnyJobPersister</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AnyJobProcessor.html">AnyJobProcessor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BackoffRetryStrategy.html">BackoffRetryStrategy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FileBasedPersister.html">FileBasedPersister</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/HaltRetryStrategy.html">HaltRetryStrategy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JobQueue.html">JobQueue</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JobQueue/State.html">– State</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:4Cute25JobQueueNotificationTokenC">JobQueueNotificationToken</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MaxRetryStrategy.html">MaxRetryStrategy</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/JobQueueEvent.html">JobQueueEvent</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/JobPersister.html">JobPersister</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/JobProcessor.html">JobProcessor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/JobRetryStrategy.html">JobRetryStrategy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/QueueJob.html">QueueJob</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>FileBasedPersister</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="kt">FileBasedPersister</span><span class="o">&lt;</span><span class="kt">HandlingJob</span><span class="p">:</span> <span class="kt"><a href="../Protocols/QueueJob.html">QueueJob</a></span><span class="o">&gt;</span><span class="p">:</span> <span class="kt"><a href="../Protocols/JobPersister.html">JobPersister</a></span></code></pre>
+
+                </div>
+              </div>
+            <p>A JobPersister which persists QueueJobs to the device&rsquo;s local file system</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4Cute18FileBasedPersisterC19persistenceLocationSSvp"></a>
+                    <a name="//apple_ref/swift/Property/persistenceLocation" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4Cute18FileBasedPersisterC19persistenceLocationSSvp">persistenceLocation</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Provides the path to where this Persister is performing its IO.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="k">var</span> <span class="nv">persistenceLocation</span><span class="p">:</span> <span class="kt">String</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4Cute18FileBasedPersisterCACyxGxm8handling_SS9queueNametcfc"></a>
+                    <a name="//apple_ref/swift/Method/init(handling:queueName:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4Cute18FileBasedPersisterCACyxGxm8handling_SS9queueNametcfc">init(handling:queueName:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Initializes this JobPersister</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="nf">init</span><span class="p">(</span><span class="nv">handling</span><span class="p">:</span> <span class="kt">HandlingJob</span><span class="o">.</span><span class="k">Type</span><span class="p">,</span> <span class="nv">queueName</span><span class="p">:</span> <span class="kt">String</span><span class="p">)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>handling</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The type of QueueJob this persister will handle</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>queueName</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The name of the queue this persister is saving jobs for.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4Cute18FileBasedPersisterC7persistySayxGKF"></a>
+                    <a name="//apple_ref/swift/Method/persist(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4Cute18FileBasedPersisterC7persistySayxGKF">persist(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Writes a JSONEncoded version of the QueueJobs to the <code>Application Support/Cute/Queues/[Queue Name]</code> directory</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    An error any of the jobs fail to persist.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">persist</span><span class="p">(</span><span class="n">_</span> <span class="nv">jobs</span><span class="p">:</span> <span class="p">[</span><span class="kt">HandlingJob</span><span class="p">])</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>jobs</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The QueueJobs to persist</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4Cute18FileBasedPersisterC6deleteyxKF"></a>
+                    <a name="//apple_ref/swift/Method/delete(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4Cute18FileBasedPersisterC6deleteyxKF">delete(_:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Deletes the job&rsquo;s persisted file from disk</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    An error if the job&rsquo;s persiste file fails to delete.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">delete</span><span class="p">(</span><span class="n">_</span> <span class="nv">job</span><span class="p">:</span> <span class="kt">HandlingJob</span><span class="p">)</span> <span class="k">throws</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>job</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The job whose persisted file is to be deleted</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4Cute18FileBasedPersisterC4loadSayxGyKF"></a>
+                    <a name="//apple_ref/swift/Method/load()" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4Cute18FileBasedPersisterC4loadSayxGyKF">load()</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Loads all jobs from file in the correct order</p>
+<div class="aside aside-throws">
+    <p class="aside-title">Throws</p>
+    An error if any of the jobs failed to load from disk.
+
+</div>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">load</span><span class="p">()</span> <span class="k">throws</span> <span class="o">-&gt;</span> <span class="p">[</span><span class="kt">HandlingJob</span><span class="p">]</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>The array of jobs loaded from disk, in their correct order</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4Cute18FileBasedPersisterC5clearyys5Error_pSgcSg10completion_tF"></a>
+                    <a name="//apple_ref/swift/Method/clear(completion:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4Cute18FileBasedPersisterC5clearyys5Error_pSgcSg10completion_tF">clear(completion:)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Clears all persisted jobs from disk</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="kd">public</span> <span class="kd">func</span> <span class="nf">clear</span><span class="p">(</span><span class="nv">completion</span><span class="p">:</span> <span class="p">((</span><span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)?)</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>completion</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>The block to call after the attempt to clear all jobs is complete.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="https://www.github.com/ryanbaldwin" target="_blank" rel="external">Ryan Baldwin</a>. All rights reserved. (Last updated: 2018-06-26)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
