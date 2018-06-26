@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Cute  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="Cute  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">Cute Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/ryanbaldwin/Cute"><img src="img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">Cute Reference</a>
+        <img id="carat" src="img/carat.png" />
+        Cute  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/AnyJobPersister.html">AnyJobPersister</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/AnyJobProcessor.html">AnyJobProcessor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/BackoffRetryStrategy.html">BackoffRetryStrategy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/FileBasedPersister.html">FileBasedPersister</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/HaltRetryStrategy.html">HaltRetryStrategy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JobQueue.html">JobQueue</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/JobQueue/State.html">– State</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes.html#/s:4Cute25JobQueueNotificationTokenC">JobQueueNotificationToken</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/MaxRetryStrategy.html">MaxRetryStrategy</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/JobQueueEvent.html">JobQueueEvent</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/JobPersister.html">JobPersister</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/JobProcessor.html">JobProcessor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/JobRetryStrategy.html">JobRetryStrategy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Protocols/QueueJob.html">QueueJob</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <h1 id='cute' class='heading'>Cute</h1>
+<h2 id='a-simple-way-to-create-process-and-observe-queues-in-swift' class='heading'>A simple way to create, process, and observe Queues in Swift</h2>
+
+<p>Ah, queing. Everything will eventually need it. While iOS offers <code>NSOperation</code> and <code>NSOperationQueue</code>, in my experience they are messy, confusing, difficult to use, and not very portable. <code>Cute</code> attempts to solve that problem by implementing a basic, thread-safe and type-safe Queue structure, complete with type-safe processing, observing, and persistence. <code>Cute</code> is composable, portable, and easy to use.</p>
+<h2 id='table-of-contents' class='heading'>Table of Contents</h2>
+
+<ul>
+<li><a href="#installation">Installation</a>
+
+<ul>
+<li><a href="#carthage">Carthage</a></li>
+<li><a href="#clone-n-build">Clone n&rsquo; Build</a></li>
+</ul></li>
+<li><a href="#using-cute">Using Cute</a>
+
+<ul>
+<li><a href="#jobqueues-and-queuejobs">JobQueues and QueueJobs</a></li>
+<li><a href="#creating-a-queuejob">Creating a QueueJob</a></li>
+<li><a href="#creating-a-jobqueue">Creating a JobQueue</a></li>
+<li><a href="#persisting-queuejobs">Persisting QueueJobs</a>
+
+<ul>
+<li><a href="#filebasedpersister">FileBasedPersister</a></li>
+</ul></li>
+<li><a href="#processing-a-jobqueue">Processing a JobQueue</a></li>
+<li><a href="#job-retry-strategies">Job Retry Strategies</a>
+
+<ul>
+<li><a href="#the-haltretrystrategy">The HaltRetryStrategy</a></li>
+<li><a href="#the-maxretrystrategy">The MaxRetryStrategy</a></li>
+<li><a href="#backoffretrystrategy">BackoffRetryStrategy</a></li>
+</ul></li>
+<li><a href="#observing-jobqueues">Observing JobQueues</a></li>
+</ul></li>
+</ul>
+<h2 id='installation' class='heading'>Installation</h2>
+
+<p>First thing first, you need to <q>install</q> it. You have 2 options: <code>Carthage</code> and <code>Good Ol&#39; Clone &#39;n Build</code>.</p>
+<h3 id='carthage' class='heading'>Carthage</h3>
+
+<ol>
+<li><p>Add the following to your Cartfile</p>
+
+<blockquote>
+<p>github <q>https://github.ehealthinnovation.org/PHIT/Cute.git</q> ~&gt; 0.1</p>
+</blockquote></li>
+<li><p>Do a <code>carthage update --platform iOS --cache-builds</code></p></li>
+<li><p>Install the framework as described in <a href="https://github.com/Carthage/Carthage#if-youre-building-for-ios-tvos-or-watchos">building for iOS, tvOS, or watchOS</a></p></li>
+<li><p>Build your first queue!</p></li>
+</ol>
+<h3 id='clone-n-39-build' class='heading'>Clone n&rsquo; Build</h3>
+
+<ol>
+<li><code>git clone</code> this repo</li>
+<li>Open the <code>Cute.xcodeproj</code> and build it.</li>
+</ol>
+<h2 id='using-cute' class='heading'>Using Cute</h2>
+
+<p>Cute attempts to make things as simple as possible for queing and processing jobs. It attempts to make no assumptions about how you use queues, including whether or not you wish to process the queues automagically. Cute is, ultimately, pretty stupid.</p>
+
+<p>We will build up a JobQueue, step by step, but first - a diagram!</p>
+
+<p>[Insert a diagram here]</p>
+<h3 id='jobqueues-and-queuejobs' class='heading'>JobQueues and QueueJobs</h3>
+
+<p>Well, the naming sucks, but here&rsquo;s what they are:</p>
+
+<ul>
+<li><p><code><a href="Protocols/QueueJob.html">QueueJob</a></code>: A protocol which defines what a job is. <code><a href="Protocols/QueueJob.html">QueueJob</a></code> defines 4 fields:</p>
+
+<ul>
+<li><code>id: String</code>: The unique id of a given job.</li>
+<li><code>createdDate: Date</code>: The Date the job was created</li>
+<li><code>data: Data?</code>: The optional data contained in this job which will be used by a processor</li>
+<li><code>action: String</code>: The <q>action</q> for this job, in the situation where a processor may need to do one of multiple things when processing a job. <code>action</code> is domain specific, and can be whatever you need it to be.</li>
+</ul></li>
+<li><p><code>JobQueue&lt;Job: QueueJob&gt;</code>: A generic Queue which (optionally) processes a <code><a href="Protocols/QueueJob.html">QueueJob</a></code>. <code><a href="Classes/JobQueue.html">JobQueue</a></code>s are basic Queue structures (first in, first out) with a typical Queue interfaces:</p>
+
+<ul>
+<li><code>add(_: [Job])</code>: addes an array of jobs to the queue</li>
+<li><code>remove() -&gt; Job</code>: Removes the next job in the queue and returns it</li>
+<li><code>peek() -&gt; Job</code>: Returns the next job in the queue <em>without</em> removing it.</li>
+<li><code>count: Int</code>: Returns the number of jobs in the queue.</li>
+</ul>
+
+<p><code>Cute.JobQueue</code>s provide additional APIs:</p>
+
+<ul>
+<li><code>cancel(id: String)</code>: Removes a job from the queue with the matching <code>id</code></li>
+<li><code>retry(_: Job)</code>: Adds the job at the front of the queue so it&rsquo;s next up for processing. This is typically used by a <code>RetryStrategy</code>, which we&rsquo;ll get to later.</li>
+<li><code>start()</code>: If the queue has been assigned a <code><a href="Protocols/JobProcessor.html">JobProcessor</a></code>, then the queue will start feeding queued jobs to the processor.</li>
+<li><code>stop()</code>: The inverse of <code>start</code>, in that the queue will stop feeding queued jobs to the processor</li>
+<li><code>observe(_: @escaping (JobQueue&lt;Job&gt;, [Job], JobQueueEvent) -&gt; Void) -&gt; JobQueueNotificationToken&lt;Job&gt;</code>: Provides a means of observing activity in the queue.</li>
+</ul></li>
+</ul>
+<h3 id='creating-a-queuejob' class='heading'>Creating a QueueJob</h3>
+
+<p><code><a href="Protocols/QueueJob.html">QueueJob</a></code> is a simple protocol to which anything can be conformed. In my experience, conforming to a <code>struct</code> is the most convenient and, likely, the more swifty way of doing things. Because Swift 4 allows you to typealias existing structs/classes, and furthermore allows you to add extensions to those typealiases, it&rsquo;s easiest to create a <q>base</q> <code><a href="Protocols/QueueJob.html">QueueJob</a></code> for your project. You can use the following as a template:</p>
+<pre class="highlight plaintext"><code>import Foundation
+import Cute
+
+struct CuteJob: QueueJob {
+  private(set) var id: String = UUID().uuidString
+  private(set) var createdDate = Date()
+  var data: Data?
+  var action: String = ""
+}
+</code></pre>
+
+<p>With the above <q>base</q> <code><a href="Protocols/QueueJob.html">QueueJob</a></code>, we can easily create other <q>types</q> of jobs. For example, if we wanted to define a <code><a href="Protocols/QueueJob.html">QueueJob</a></code> used for uploading a FHIR Observation to a server, we could do the following:</p>
+<pre class="highlight plaintext"><code>import Foundation
+import FireKit
+
+enum UploadAction: String {
+    case create, update, delete
+}
+
+typealias ObservationUploadJob = CuteJob
+extension ObservationUploadJob {
+
+    var uploadAction: UploadAction? {
+        return UploadAction(rawValue: action)
+    }
+
+    init(_ action: UploadAction, _ observation: Observation) throws {
+        self.action = action.rawValue
+        self.data = try JSONEncoder().encode(observation)
+    }
+}
+</code></pre>
+
+<p>We can now create an <code>ObservationUploadJob</code> by simply doing the following:</p>
+<pre class="highlight plaintext"><code>import Foundation
+import FireKit
+
+let observation = Observation()
+observation.valueString = "Above Threshold"
+observation.subject = Reference(Patient.self, id: "\(123456)")
+
+let job = try? ObservationUploadJob(.create, observation)
+</code></pre>
+
+<p>We now have a <code><a href="Protocols/QueueJob.html">QueueJob</a></code> of type <code>ObservationUploadJob</code>, complete with serialized observation data and an action specific to this domain. This job can now be submitted to any <code><a href="Classes/JobQueue.html">JobQueue</a></code> which allows <code>ObservationUploadJob</code>s. </p>
+<h3 id='creating-a-jobqueue' class='heading'>Creating a JobQueue</h3>
+
+<p>With the <code>ObservationUploadJob</code> defined, how do we create the <code><a href="Classes/JobQueue.html">JobQueue</a></code> that will accept that type of job? Easy - just do the following:</p>
+<pre class="highlight plaintext"><code>import Foundation
+import Cute
+
+let observationUploadQueue = JobQueue(handling: ObservationUploadJob.self, 
+                                      name: "Observation Upload Queue")
+</code></pre>
+
+<p>That&rsquo;s it. We now have a JobQueue of type <code><a href="Classes/JobQueue.html">JobQueue&lt;ObservationUploadJob&gt;</a></code> that will only accept jobs of that defined type. As such, we can submit our job to the queue by calling the <code>add(_: [ObservationUploadJob])</code> method on the queue:</p>
+<pre class="highlight plaintext"><code>observationUploadQueue.add([job])
+</code></pre>
+
+<p>Creating a basic <code><a href="Classes/JobQueue.html">JobQueue</a></code> like the one above creates an <em>in-memory only</em> JobQueue. This means as soon as the queue goes out of scope, any jobs contained in the Queue will be lost. This might be okay in some use cases, but you may want to persist those jobs between scope or app-cycles. For that we turn to <code><a href="Protocols/JobPersister.html">JobPersister</a></code>s.</p>
+<h3 id='persisting-queuejobs' class='heading'>Persisting QueueJobs</h3>
+
+<p>You can persist jobs in a JobQueue by assigning that JobQueue a <code>JobPersister&lt;JobType: QueueJob&gt;</code>, a protocol with an <code>associatedtype</code>. There are 4 functions defined on a <code><a href="Protocols/JobPersister.html">JobPersister</a></code>:</p>
+
+<ul>
+<li><code>persist(_: [JobType]) throws</code>: Persists the given jobs to&hellip; somewhere!</li>
+<li><code>delete(_: JobType) throws</code>: Deletes the job&rsquo;s persistent representation</li>
+<li><code>load() throws -&gt; [JobType]</code>: Loads and returns all jobs from their persistent representation</li>
+<li><code>clear(completion: ((Error?) -&gt; Void)?)</code>: Clear all persisted jobs</li>
+</ul>
+
+<p>If a <code><a href="Classes/JobQueue.html">JobQueue</a></code> is provided a <code><a href="Protocols/JobPersister.html">JobPersister</a></code>, then the <code><a href="Classes/JobQueue.html">JobQueue</a></code> will attempt to <code>persist</code> every added job, while also <code>delete</code>ing every <code>removed</code> job. Furthermore, if a JobQueue is initialized with a <code><a href="Protocols/JobPersister.html">JobPersister</a></code>, the <code><a href="Classes/JobQueue.html">JobQueue</a></code> will atttempt to <code>load</code> all jobs from the persister and <code>add</code> the returned jobs to itself.</p>
+<h4 id='filebasedpersister' class='heading'>FileBasedPersister</h4>
+
+<p><code>Cute</code> provides a single <code><a href="Protocols/JobPersister.html">JobPersister</a></code> out of the box: The <code><a href="Classes/FileBasedPersister.html">FileBasedPersister</a></code>. The <code><a href="Classes/FileBasedPersister.html">FileBasedPersister</a></code> persists jobs to the local device&rsquo;s file system. Specifically, it will persist the jobs in the device&rsquo;s <code>Application Support</code> directory at <code>Application Support/Cute/Queues/[Queue Name]</code>.</p>
+
+<p>So if we wanted the queue we created earlier to persist its jobs, we can either create and assign it our own <code><a href="Protocols/JobPersister.html">JobPersister</a></code> (if we want to persist the job somewhere other than the local FileSystem), or simply create an instance of <code><a href="Classes/FileBasedPersister.html">FileBasedPersister</a></code> and assign it.</p>
+<pre class="highlight plaintext"><code>import Foundation
+import Cute
+
+let name = "Observation Upload Queue"
+let observationUploadQueue = try JobQueue(handling: ObservationUploadJob.self,
+                                      name: name)
+let persister = FileBasedPersister(handling: ObservationUploadJob.self,
+                                   queueName: name)
+
+// Note: We need to type-erase using `AnyJobPersister` because you can't store
+// protocols with associated types as parameters or properties.
+observationUploadQueue.persister = AnyJobPersister(persister)
+</code></pre>
+
+<p>Our <code>observationUploadQueue</code> will now persist any added, removed, or cancelled jobs to the device&rsquo;s file system at `Application Support/Cute/Queues/Observation-Upload-Queue&quot;.</p>
+
+<p>If we want our <code>observationUploadQueue</code> to load jobs and add them on <code>init</code>, we would simply pass the persister at the time of initialization:</p>
+<pre class="highlight plaintext"><code>import Foundation
+import Cute
+
+let name = "Observation Upload Queue"
+let persister = FileBasedPersister(handling: ObservationUploadJob.self,
+                                   queueName: name)
+let observationUploadQueue = try JobQueue(handling: ObservationUploadJob.self,
+                                      name: name,
+                                      persister: persister)
+</code></pre>
+<h3 id='processing-a-jobqueue' class='heading'>Processing a JobQueue</h3>
+
+<p>By default JobQueues are in-memory only queues which don&rsquo;t actually do any processing. They simply maintain a First-In-First-Out data buffer which must be manually maintained. This can be useful in, say, a function which requires short controlled processing, but for background processing it stinks. Enter the <code>JobProcessor&lt;JobType: QueueJob&gt;</code>.</p>
+<pre class="highlight plaintext"><code>public protocol JobProcessor: class {
+    associatedtype JobType: QueueJob
+
+    func processJob(_ job: JobType, completion: @escaping ((JobType, Error?) -&gt; Void))
+}
+</code></pre>
+
+<p><code>JobProcessor&lt;JobType: QueueJob&gt;</code> is a protocol with an associatedtype of <code>JobType</code>, which must conform to the <code><a href="Protocols/QueueJob.html">QueueJob</a></code> protocol (just like <code><a href="Classes/JobQueue.html">JobQueue</a></code>s and <code><a href="Protocols/JobPersister.html">JobPersister</a></code>s). The protocol has a single function, <code>processJob(_: JobType, completion: @escaping ((JobType, Error?) -&gt; Void))</code>. This function receives a job, does something with the job, and then calls the completion block. If the job failed to process, we call the completion with the job that was received, along with the generated <code>Error</code>. Otherwise, if the processing was successful, we simply call the completion block with job that was successfully processed.</p>
+
+<p>To continue our Observation Upload example, we could create a <code><a href="Protocols/JobProcessor.html">JobProcessor</a></code> with the following (somewhat pseudo) code:</p>
+<pre class="highlight plaintext"><code>class ObservationUploadJobProcessor: JobProcessor {
+    typealias JobType = ObservationUploadJob
+
+    // some server which knows how to add/update/delete, and returns a promise to do so
+    var server: ObservationServer?
+
+    convenience init(server: ObservationServer) {
+        self.init()
+        self.server = server
+    }
+
+    func processJob(_ job: ObservationUploadJob, completion: @escaping ((ObservationUploadJob, Error?) -&gt; Void)) {
+        guard let data = job.data else {
+            fatalError("No data was found in Job, and thus we cannot upload the Observation to the server. Removing job from queue.")
+        }
+
+        guard let action = job.uploadAction else {
+            fatalError("Could not determine the job's upload action `\(job.action)`. This seems like a bug.")
+        }
+
+        var observation: Observation!
+        do {
+            observation = try JSONDecoder().decode(Observation.self, from: data)
+        } catch let error {
+            fatalError("Failed to deserialize the FHIR Observation from the ObservationUploadJob. This seems like a bug: \(error)")
+        }
+
+        firstly {
+            serverAction(action, forObservation: observation)
+        }.done { Observations in
+            completion(job, nil)
+        }.catch { error in
+            completion(job, error)
+        }
+    }
+
+    func serverAction(_ action: ObservationUploadAction, forObservation Observation: Observation) -&gt; Promise&lt;[Observation]&gt; {
+        guard let server = server else {
+            fatalError("No ObservationServer was set on the ObservationUploadQueueProcesser prior to it being started. This is a bug.")
+        }
+
+        switch action {
+        case .create: return server.create(Observations: [Observation])
+        case .update: return server.update(Observations: [Observation])
+        case .delete: return server.delete(Observations: [Observation])
+        }
+    }
+}
+</code></pre>
+
+<p>The above processor attempts to invoke the appropriate function on some mythical <code>ObservationServer</code>, which notifies the queue of whether or not it was successful. That&rsquo;s it!</p>
+
+<p>You can assign a <code><a href="Classes/JobQueue.html">JobQueue</a></code> any <code><a href="Protocols/JobProcessor.html">JobProcessor</a></code> which processes the same type of job as the <code><a href="Classes/JobQueue.html">JobQueue</a></code>. </p>
+<pre class="highlight plaintext"><code>import Foundation
+import Cute
+
+let name = "Observation Upload Queue"
+let persister = FileBasedPersister(handling: ObservationUploadJob.self,
+                                   queueName: name)
+let observationUploadQueue = try JobQueue(handling: ObservationUploadJob.self,
+                                      name: name,
+                                      persister: persister)
+observationUploadQueue.processor = AnyJobProcessor(ObservationUploadJobProcessor(server: MyObservationServer())
+</code></pre>
+
+<p>However, recall that <code><a href="Classes/JobQueue.html">JobQueue</a></code> have <code>start</code> and <code>stop</code> methods. These methods control whether or not a <code><a href="Classes/JobQueue.html">JobQueue</a></code> will forward its jobs to the assigned JobProcessor. </p>
+<pre class="highlight plaintext"><code>...
+observationUploadQueue.processor = AnyJobProcessor(ObservationUploadJobProcessor(server: MyObservationServer())
+observationUploadQueue.start()
+</code></pre>
+
+<p>By calling <code>start</code> above, we tell our ObservationUploadQueue to start forwarding jobs to the assigned <code><a href="Protocols/JobProcessor.html">JobProcessor</a></code>. The queue will continue to send jobs to the processor until the queue is empty, after which any new jobs that were added to the queue will also be forwarded to the processor.</p>
+
+<p>Conversely, we can tell the queue to stop sending jobs to its assigned processor by calling the queue&rsquo;s <code>stop</code> method.</p>
+<pre class="highlight plaintext"><code>...
+observationUploadQueue.stop()
+</code></pre>
+
+<p>When called, the <code>stop</code> function will waiting until the current processing job is completed, afterwhich no more jobs will be sent to the assigned processor until <code>start</code> is called.</p>
+
+<p>The <code>start()</code> and <code>stop()</code> functions are important, and can be useful if we need to re-try jobs which failed to process. Speaking of which&hellip;</p>
+<h3 id='job-retry-strategies' class='heading'>Job Retry Strategies</h3>
+
+<p>When a <code><a href="Classes/JobQueue.html">JobQueue</a></code> forwards a job to a <code><a href="Protocols/JobProcessor.html">JobProcessor</a></code> for processing, the <code><a href="Classes/JobQueue.html">JobQueue</a></code> will first <em><code>remove()</code></em> that job from the queue. Any jobs that fail to process, by default, <em>will not be re-added to the queue</em>. However, <code><a href="Classes/JobQueue.html">JobQueue</a></code>s <em>do</em> provide a means of re-trying a failed job using a <code><a href="Protocols/JobRetryStrategy.html">JobRetryStrategy&lt;QueueJob&gt;</a></code>.</p>
+
+<p>&ldquo;`Swift 4
+public protocol JobRetryStrategy {</p>
+<pre class="highlight plaintext"><code>/// Instructs how to retry the failed `job` on the provided `queue`
+///
+/// - Parameters:
+///   - job: The QueueJob which failed to process
+///   - queue: The JobQueue on which the job failed.
+func retry&lt;JobType: QueueJob&gt;(job: JobType, failedOnQueue queue: JobQueue&lt;JobType&gt;)
+</code></pre>
+
+<p>}</p>
+<pre class="highlight plaintext"><code>
+A `JobRetryStrategy&lt;QueueJob&gt;` is a simple protocol which defines a method, `retry&lt;JobType: QueueJob&gt;(job: JobType, failedOnQueue queue: JobQueue&lt;JobType&gt;)`. This method is provided the failed job, along with the JobQueue on which the job had failed processing. 
+
+You can create your own `JobRetryStrategy`to do whatever you want. By default, `Cute` provides 3 different retry strategies for you: 
+
+- `HalthRetryStrategy`
+- `MaxRetryStrategy`
+- `BackoffRetryStrategy`.
+
+#### The HaltRetryStrategy
+The `HaltRetryStrategy` is a bit of a misleading name. It doesn't actually retry at all. Rather, the `HaltRetryStrategy` simply stops the queue and then re-queues the failed job at the front of the queue. The queue must be manually restarted. In most circumstances it is unlikely you'd want to actually use the `HaltRetryStrategy` for any kind of background processing.
+
+#### The MaxRetryStrategy
+The `MaxRetryStrategy` will re-add the job to the front of the queue such that the queue will re-attempt to process the job again (remember, queues will always `remove` the next job in line, and pass that job to the job processor). The `MaxRetryStrategy` will re-queue the failed job up to a max-number of times. If the job still fails to process after the max number of attempts is reached, the strategy will not re-add the job to the queue and the job will be purged.
+
+#### BackoffRetryStrategy
+The `BackoffRetryStrategy` will progressively "back off" attempts of processing the job, starting at 1 second. If the job fails again, the strategy will try to process the job again in 2 seconds, then 4 second, then 8, and so on, until a max-backoff is reached (defaults to 1 hour, or 3600 seconds). The `BackoffRetryStrategy` will never purge the queue of a failed job.
+
+The `BackoffRetryStrategy` accomplishes the above by performing the following steps:
+
+1. Stop the queue
+2. re-add the job to the front of the queue
+3. Schedule a `Timer` to fire in X-seconds
+4. When `Timer` fires, the strategy re-starts the queue
+
+You can define a re-try strategy for a `JobQueue` by assigning it's `retryStrategy` property to an instance of anything that conforms to the `JobRetryStrategy` protocol.
+
+```Swift
+observationUploadQueue.retryStrategy = BackoffRetryStrategy(maxBackoff: 60*60) // waits a max 1 hour
+</code></pre>
+<h3 id='observing-jobqueues' class='heading'>Observing JobQueues</h3>
+
+<p>A <code><a href="Classes/JobQueue.html">JobQueue</a></code> fires notifications to observers during key events. Specifically, observers receive notifications whenever a JobQueue</p>
+
+<ul>
+<li>adds a job</li>
+<li>removes a job</li>
+<li>cancels a job</li>
+<li>processes a job</li>
+<li>fails to process a job</li>
+</ul>
+
+<p>An observer receives a notification by calling a <code><a href="Classes/JobQueue.html">JobQueue</a></code>&lsquo;s <code>observe</code> function and passing it a block. </p>
+<pre class="highlight plaintext"><code>let token = observationUploadQueue.observe { queue, jobs, event in
+    switch event {
+        case .added: 
+            print("\(jobs) were added to queue \(queue)")
+        case .removed:
+            print("\(jobs) were removed from queue \(queue)")
+        case .cancelled:
+            print("\(jobs) were cancelled in queue \(queue)")
+        case .processed:
+            print("\(jobs) successfully processed on queue \(queue)")
+        case .failedToProcess:
+            print("\(jobs) failed to process on queue \(queue)")
+    }
+}
+</code></pre>
+
+<p>The <code>observe</code> function returns a <em>weak</em> <code><a href="Classes.html#/s:4Cute25JobQueueNotificationTokenC">JobQueueNotificationToken</a></code> which must be strongly retained. As soon as the token goes out of scop,e the <code><a href="Classes/JobQueue.html">JobQueue</a></code> will stop sending notifications to that observer.</p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="https://www.github.com/ryanbaldwin" target="_blank" rel="external">Ryan Baldwin</a>. All rights reserved. (Last updated: 2018-06-26)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

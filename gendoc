@@ -1,0 +1,11 @@
+#! /bin/bash
+#cp ../src/README.md .
+jazzy \
+	--source-directory . \
+	--readme README.md \
+	-o ./docs \
+	-a 'Ryan Baldwin' \
+	-u 'https://www.github.com/ryanbaldwin' \
+	-m 'Cute' \
+	-g 'https://github.com/ryanbaldwin/Cute' \
+	--min-acl public

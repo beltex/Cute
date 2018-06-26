@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>JobQueueEvent Enumeration Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Enum/JobQueueEvent" class="dashAnchor"></a>
+    <a title="JobQueueEvent Enumeration Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Cute Docs</a> (100% documented)</p>
+        <p class="header-right"><a href="https://github.com/ryanbaldwin/Cute"><img src="../img/gh.png"/>View on GitHub</a></p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">Cute Reference</a>
+        <img id="carat" src="../img/carat.png" />
+        JobQueueEvent Enumeration Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Classes/AnyJobPersister.html">AnyJobPersister</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/AnyJobProcessor.html">AnyJobProcessor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/BackoffRetryStrategy.html">BackoffRetryStrategy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/FileBasedPersister.html">FileBasedPersister</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/HaltRetryStrategy.html">HaltRetryStrategy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JobQueue.html">JobQueue</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/JobQueue/State.html">– State</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes.html#/s:4Cute25JobQueueNotificationTokenC">JobQueueNotificationToken</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Classes/MaxRetryStrategy.html">MaxRetryStrategy</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Enums/JobQueueEvent.html">JobQueueEvent</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Extensions.html">Extensions</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Extensions/String.html">String</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="../Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Protocols/JobPersister.html">JobPersister</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/JobProcessor.html">JobProcessor</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/JobRetryStrategy.html">JobRetryStrategy</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="../Protocols/QueueJob.html">QueueJob</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>JobQueueEvent</h1>
+              <div class="declaration">
+                <div class="language">
+                  <pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="kt">JobQueueEvent</span></code></pre>
+
+                </div>
+              </div>
+            <p>Defines the key events which occur to a <code><a href="../Classes/JobQueue.html">JobQueue</a></code>&lsquo;s <code>Job</code></p>
+
+<ul>
+<li>added: The jobs were added to the JobQueue</li>
+<li>cancelled: The jobs were cancelled in the JobQueue</li>
+<li>removed: The jobs were removed from the JobQueue</li>
+<li>processed: The jobs were successfully processed</li>
+<li>failedToProcess: The jobs failed to successfully process</li>
+</ul>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4Cute13JobQueueEventO5addedA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/added" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4Cute13JobQueueEventO5addedA2CmF">added</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The jobs were added to the JobQueue</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="k">case</span> <span class="n">added</span><span class="p">,</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4Cute13JobQueueEventO9cancelledA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/cancelled" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4Cute13JobQueueEventO9cancelledA2CmF">cancelled</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The jobs were cancelled in the JobQueue</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">cancelled</span><span class="p">,</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4Cute13JobQueueEventO7removedA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/removed" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4Cute13JobQueueEventO7removedA2CmF">removed</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The jobs were removed from the JobQueue</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">removed</span><span class="p">,</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4Cute13JobQueueEventO9processedA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/processed" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4Cute13JobQueueEventO9processedA2CmF">processed</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The jobs were successfully processed</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">processed</span><span class="p">,</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:4Cute13JobQueueEventO15failedToProcessA2CmF"></a>
+                    <a name="//apple_ref/swift/Element/failedToProcess" class="dashAnchor"></a>
+                    <a class="token" href="#/s:4Cute13JobQueueEventO15failedToProcessA2CmF">failedToProcess</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>The jobs failed to successfully process</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight"><code><span class="n">failedToProcess</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="https://www.github.com/ryanbaldwin" target="_blank" rel="external">Ryan Baldwin</a>. All rights reserved. (Last updated: 2018-06-26)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.0</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>

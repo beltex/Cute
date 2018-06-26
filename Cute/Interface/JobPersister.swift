@@ -8,7 +8,11 @@
 
 import Foundation
 
+/// Provides the means of persisting jobs for a `JobQueue`.
+/// `JobQueue`s which have not been assigned a `JobPersister` will operate as in-memory only queues.
 public protocol JobPersister: class {
+    
+    /// The type of QueueJob a conforming type can persist.
     associatedtype JobType: QueueJob
     
     /// Will save the jobs to a permanent destination

@@ -49,6 +49,8 @@ open class JobQueue<Job: QueueJob> {
     
     /// Maintains the state of the processor.
     private var _state: State = .stopped
+
+    /// Returns the current `JobQueue.State` of this instance
     private(set) public var state: State {
         get {
             return stateDispatch.sync {
@@ -63,6 +65,9 @@ open class JobQueue<Job: QueueJob> {
     
     /// The processor this queue will use to process pending jobs.
     private var _processor: AnyJobProcessor<Job>?
+    
+    /// Gets the `JobProcessor` to process the jobs on this instance, if any; otherwise `nil`.
+    /// `JobQueue`s without a `JobProcessor` must manually process and remove jobs from the queue.
     public var processor: AnyJobProcessor<Job>? {
         get {
             return queueDispatch.sync { [weak self] in self?._processor }
@@ -75,6 +80,8 @@ open class JobQueue<Job: QueueJob> {
         }
     }
     
+    /// Gets the `JobPersister` to persist jobs in this queue, if one exists; otherwise nil.
+    /// JobQueues that do not have a `JobPersister` will be in-memory only.
     public var persister: AnyJobPersister<Job>?
     
     /// Initializes this JobQueue to handle the given type of Job

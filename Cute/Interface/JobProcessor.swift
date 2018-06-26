@@ -12,6 +12,7 @@ import Foundation
 /// Defines an object which can process a QueueJob of a given type.
 /// A JobProcessor instance can be assigned to any JobQueue of the same underlying QueueJob type.
 public protocol JobProcessor: class {
+    /// The type of `QueueJob` a conforming type can process.
     associatedtype JobType: QueueJob
     
     /// Processes a job of the given type. If the job fails to process for any reason the
