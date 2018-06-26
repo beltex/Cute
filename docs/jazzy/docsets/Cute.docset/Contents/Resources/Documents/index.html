@@ -196,63 +196,63 @@
 <h3 id='creating-a-queuejob' class='heading'>Creating a QueueJob</h3>
 
 <p><code><a href="Protocols/QueueJob.html">QueueJob</a></code> is a simple protocol to which anything can be conformed. In my experience, conforming to a <code>struct</code> is the most convenient and, likely, the more swifty way of doing things. Because Swift 4 allows you to typealias existing structs/classes, and furthermore allows you to add extensions to those typealiases, it&rsquo;s easiest to create a <q>base</q> <code><a href="Protocols/QueueJob.html">QueueJob</a></code> for your project. You can use the following as a template:</p>
-<pre class="highlight plaintext"><code>import Foundation
-import Cute
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">Foundation</span>
+<span class="kd">import</span> <span class="kt">Cute</span>
 
-struct CuteJob: QueueJob {
-  private(set) var id: String = UUID().uuidString
-  private(set) var createdDate = Date()
-  var data: Data?
-  var action: String = ""
-}
+<span class="kd">struct</span> <span class="kt">CuteJob</span><span class="p">:</span> <span class="kt">QueueJob</span> <span class="p">{</span>
+  <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">id</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="kt">UUID</span><span class="p">()</span><span class="o">.</span><span class="n">uuidString</span>
+  <span class="kd">private(set)</span> <span class="k">var</span> <span class="nv">createdDate</span> <span class="o">=</span> <span class="kt">Date</span><span class="p">()</span>
+  <span class="k">var</span> <span class="nv">data</span><span class="p">:</span> <span class="kt">Data</span><span class="p">?</span>
+  <span class="k">var</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">String</span> <span class="o">=</span> <span class="s">""</span>
+<span class="p">}</span>
 </code></pre>
 
 <p>With the above <q>base</q> <code><a href="Protocols/QueueJob.html">QueueJob</a></code>, we can easily create other <q>types</q> of jobs. For example, if we wanted to define a <code><a href="Protocols/QueueJob.html">QueueJob</a></code> used for uploading a FHIR Observation to a server, we could do the following:</p>
-<pre class="highlight plaintext"><code>import Foundation
-import FireKit
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">Foundation</span>
+<span class="kd">import</span> <span class="kt">FireKit</span>
 
-enum UploadAction: String {
-    case create, update, delete
-}
+<span class="kd">enum</span> <span class="kt">UploadAction</span><span class="p">:</span> <span class="kt">String</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="n">create</span><span class="p">,</span> <span class="n">update</span><span class="p">,</span> <span class="n">delete</span>
+<span class="p">}</span>
 
-typealias ObservationUploadJob = CuteJob
-extension ObservationUploadJob {
+<span class="kd">typealias</span> <span class="kt">ObservationUploadJob</span> <span class="o">=</span> <span class="kt">CuteJob</span>
+<span class="kd">extension</span> <span class="kt">ObservationUploadJob</span> <span class="p">{</span>
 
-    var uploadAction: UploadAction? {
-        return UploadAction(rawValue: action)
-    }
+    <span class="k">var</span> <span class="nv">uploadAction</span><span class="p">:</span> <span class="kt">UploadAction</span><span class="p">?</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="kt">UploadAction</span><span class="p">(</span><span class="nv">rawValue</span><span class="p">:</span> <span class="n">action</span><span class="p">)</span>
+    <span class="p">}</span>
 
-    init(_ action: UploadAction, _ observation: Observation) throws {
-        self.action = action.rawValue
-        self.data = try JSONEncoder().encode(observation)
-    }
-}
+    <span class="nf">init</span><span class="p">(</span><span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">UploadAction</span><span class="p">,</span> <span class="n">_</span> <span class="nv">observation</span><span class="p">:</span> <span class="kt">Observation</span><span class="p">)</span> <span class="k">throws</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">action</span> <span class="o">=</span> <span class="n">action</span><span class="o">.</span><span class="n">rawValue</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">JSONEncoder</span><span class="p">()</span><span class="o">.</span><span class="nf">encode</span><span class="p">(</span><span class="n">observation</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre>
 
 <p>We can now create an <code>ObservationUploadJob</code> by simply doing the following:</p>
-<pre class="highlight plaintext"><code>import Foundation
-import FireKit
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">Foundation</span>
+<span class="kd">import</span> <span class="kt">FireKit</span>
 
-let observation = Observation()
-observation.valueString = "Above Threshold"
-observation.subject = Reference(Patient.self, id: "\(123456)")
+<span class="k">let</span> <span class="nv">observation</span> <span class="o">=</span> <span class="kt">Observation</span><span class="p">()</span>
+<span class="n">observation</span><span class="o">.</span><span class="n">valueString</span> <span class="o">=</span> <span class="s">"Above Threshold"</span>
+<span class="n">observation</span><span class="o">.</span><span class="n">subject</span> <span class="o">=</span> <span class="kt">Reference</span><span class="p">(</span><span class="kt">Patient</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">id</span><span class="p">:</span> <span class="s">"</span><span class="se">\(</span><span class="mi">123456</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
 
-let job = try? ObservationUploadJob(.create, observation)
+<span class="k">let</span> <span class="nv">job</span> <span class="o">=</span> <span class="k">try</span><span class="p">?</span> <span class="kt">ObservationUploadJob</span><span class="p">(</span><span class="o">.</span><span class="n">create</span><span class="p">,</span> <span class="n">observation</span><span class="p">)</span>
 </code></pre>
 
 <p>We now have a <code><a href="Protocols/QueueJob.html">QueueJob</a></code> of type <code>ObservationUploadJob</code>, complete with serialized observation data and an action specific to this domain. This job can now be submitted to any <code><a href="Classes/JobQueue.html">JobQueue</a></code> which allows <code>ObservationUploadJob</code>s. </p>
 <h3 id='creating-a-jobqueue' class='heading'>Creating a JobQueue</h3>
 
 <p>With the <code>ObservationUploadJob</code> defined, how do we create the <code><a href="Classes/JobQueue.html">JobQueue</a></code> that will accept that type of job? Easy - just do the following:</p>
-<pre class="highlight plaintext"><code>import Foundation
-import Cute
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">Foundation</span>
+<span class="kd">import</span> <span class="kt">Cute</span>
 
-let observationUploadQueue = JobQueue(handling: ObservationUploadJob.self, 
-                                      name: "Observation Upload Queue")
+<span class="k">let</span> <span class="nv">observationUploadQueue</span> <span class="o">=</span> <span class="kt">JobQueue</span><span class="p">(</span><span class="nv">handling</span><span class="p">:</span> <span class="kt">ObservationUploadJob</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> 
+                                      <span class="nv">name</span><span class="p">:</span> <span class="s">"Observation Upload Queue"</span><span class="p">)</span>
 </code></pre>
 
 <p>That&rsquo;s it. We now have a JobQueue of type <code><a href="Classes/JobQueue.html">JobQueue&lt;ObservationUploadJob&gt;</a></code> that will only accept jobs of that defined type. As such, we can submit our job to the queue by calling the <code>add(_: [ObservationUploadJob])</code> method on the queue:</p>
-<pre class="highlight plaintext"><code>observationUploadQueue.add([job])
+<pre class="highlight swift"><code><span class="n">observationUploadQueue</span><span class="o">.</span><span class="nf">add</span><span class="p">([</span><span class="n">job</span><span class="p">])</span>
 </code></pre>
 
 <p>Creating a basic <code><a href="Classes/JobQueue.html">JobQueue</a></code> like the one above creates an <em>in-memory only</em> JobQueue. This means as soon as the queue goes out of scope, any jobs contained in the Queue will be lost. This might be okay in some use cases, but you may want to persist those jobs between scope or app-cycles. For that we turn to <code><a href="Protocols/JobPersister.html">JobPersister</a></code>s.</p>
@@ -273,122 +273,122 @@ let observationUploadQueue = JobQueue(handling: ObservationUploadJob.self,
 <p><code>Cute</code> provides a single <code><a href="Protocols/JobPersister.html">JobPersister</a></code> out of the box: The <code><a href="Classes/FileBasedPersister.html">FileBasedPersister</a></code>. The <code><a href="Classes/FileBasedPersister.html">FileBasedPersister</a></code> persists jobs to the local device&rsquo;s file system. Specifically, it will persist the jobs in the device&rsquo;s <code>Application Support</code> directory at <code>Application Support/Cute/Queues/[Queue Name]</code>.</p>
 
 <p>So if we wanted the queue we created earlier to persist its jobs, we can either create and assign it our own <code><a href="Protocols/JobPersister.html">JobPersister</a></code> (if we want to persist the job somewhere other than the local FileSystem), or simply create an instance of <code><a href="Classes/FileBasedPersister.html">FileBasedPersister</a></code> and assign it.</p>
-<pre class="highlight plaintext"><code>import Foundation
-import Cute
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">Foundation</span>
+<span class="kd">import</span> <span class="kt">Cute</span>
 
-let name = "Observation Upload Queue"
-let observationUploadQueue = try JobQueue(handling: ObservationUploadJob.self,
-                                      name: name)
-let persister = FileBasedPersister(handling: ObservationUploadJob.self,
-                                   queueName: name)
+<span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="s">"Observation Upload Queue"</span>
+<span class="k">let</span> <span class="nv">observationUploadQueue</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">JobQueue</span><span class="p">(</span><span class="nv">handling</span><span class="p">:</span> <span class="kt">ObservationUploadJob</span><span class="o">.</span><span class="k">self</span><span class="p">,</span>
+                                      <span class="nv">name</span><span class="p">:</span> <span class="n">name</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">persister</span> <span class="o">=</span> <span class="kt">FileBasedPersister</span><span class="p">(</span><span class="nv">handling</span><span class="p">:</span> <span class="kt">ObservationUploadJob</span><span class="o">.</span><span class="k">self</span><span class="p">,</span>
+                                   <span class="nv">queueName</span><span class="p">:</span> <span class="n">name</span><span class="p">)</span>
 
-// Note: We need to type-erase using `AnyJobPersister` because you can't store
-// protocols with associated types as parameters or properties.
-observationUploadQueue.persister = AnyJobPersister(persister)
+<span class="c1">// Note: We need to type-erase using `AnyJobPersister` because you can't store</span>
+<span class="c1">// protocols with associated types as parameters or properties.</span>
+<span class="n">observationUploadQueue</span><span class="o">.</span><span class="n">persister</span> <span class="o">=</span> <span class="kt">AnyJobPersister</span><span class="p">(</span><span class="n">persister</span><span class="p">)</span>
 </code></pre>
 
 <p>Our <code>observationUploadQueue</code> will now persist any added, removed, or cancelled jobs to the device&rsquo;s file system at `Application Support/Cute/Queues/Observation-Upload-Queue&quot;.</p>
 
 <p>If we want our <code>observationUploadQueue</code> to load jobs and add them on <code>init</code>, we would simply pass the persister at the time of initialization:</p>
-<pre class="highlight plaintext"><code>import Foundation
-import Cute
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">Foundation</span>
+<span class="kd">import</span> <span class="kt">Cute</span>
 
-let name = "Observation Upload Queue"
-let persister = FileBasedPersister(handling: ObservationUploadJob.self,
-                                   queueName: name)
-let observationUploadQueue = try JobQueue(handling: ObservationUploadJob.self,
-                                      name: name,
-                                      persister: persister)
+<span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="s">"Observation Upload Queue"</span>
+<span class="k">let</span> <span class="nv">persister</span> <span class="o">=</span> <span class="kt">FileBasedPersister</span><span class="p">(</span><span class="nv">handling</span><span class="p">:</span> <span class="kt">ObservationUploadJob</span><span class="o">.</span><span class="k">self</span><span class="p">,</span>
+                                   <span class="nv">queueName</span><span class="p">:</span> <span class="n">name</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">observationUploadQueue</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">JobQueue</span><span class="p">(</span><span class="nv">handling</span><span class="p">:</span> <span class="kt">ObservationUploadJob</span><span class="o">.</span><span class="k">self</span><span class="p">,</span>
+                                      <span class="nv">name</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+                                      <span class="nv">persister</span><span class="p">:</span> <span class="n">persister</span><span class="p">)</span>
 </code></pre>
 <h3 id='processing-a-jobqueue' class='heading'>Processing a JobQueue</h3>
 
 <p>By default JobQueues are in-memory only queues which don&rsquo;t actually do any processing. They simply maintain a First-In-First-Out data buffer which must be manually maintained. This can be useful in, say, a function which requires short controlled processing, but for background processing it stinks. Enter the <code>JobProcessor&lt;JobType: QueueJob&gt;</code>.</p>
-<pre class="highlight plaintext"><code>public protocol JobProcessor: class {
-    associatedtype JobType: QueueJob
+<pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">protocol</span> <span class="kt">JobProcessor</span><span class="p">:</span> <span class="kd">class</span> <span class="p">{</span>
+    <span class="k">associatedtype</span> <span class="kt">JobType</span><span class="p">:</span> <span class="kt">QueueJob</span>
 
-    func processJob(_ job: JobType, completion: @escaping ((JobType, Error?) -&gt; Void))
-}
+    <span class="kd">func</span> <span class="nf">processJob</span><span class="p">(</span><span class="n">_</span> <span class="nv">job</span><span class="p">:</span> <span class="kt">JobType</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">JobType</span><span class="p">,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">))</span>
+<span class="p">}</span>
 </code></pre>
 
 <p><code>JobProcessor&lt;JobType: QueueJob&gt;</code> is a protocol with an associatedtype of <code>JobType</code>, which must conform to the <code><a href="Protocols/QueueJob.html">QueueJob</a></code> protocol (just like <code><a href="Classes/JobQueue.html">JobQueue</a></code>s and <code><a href="Protocols/JobPersister.html">JobPersister</a></code>s). The protocol has a single function, <code>processJob(_: JobType, completion: @escaping ((JobType, Error?) -&gt; Void))</code>. This function receives a job, does something with the job, and then calls the completion block. If the job failed to process, we call the completion with the job that was received, along with the generated <code>Error</code>. Otherwise, if the processing was successful, we simply call the completion block with job that was successfully processed.</p>
 
 <p>To continue our Observation Upload example, we could create a <code><a href="Protocols/JobProcessor.html">JobProcessor</a></code> with the following (somewhat pseudo) code:</p>
-<pre class="highlight plaintext"><code>class ObservationUploadJobProcessor: JobProcessor {
-    typealias JobType = ObservationUploadJob
+<pre class="highlight swift"><code><span class="kd">class</span> <span class="kt">ObservationUploadJobProcessor</span><span class="p">:</span> <span class="kt">JobProcessor</span> <span class="p">{</span>
+    <span class="kd">typealias</span> <span class="kt">JobType</span> <span class="o">=</span> <span class="kt">ObservationUploadJob</span>
 
-    // some server which knows how to add/update/delete, and returns a promise to do so
-    var server: ObservationServer?
+    <span class="c1">// some server which knows how to add/update/delete, and returns a promise to do so</span>
+    <span class="k">var</span> <span class="nv">server</span><span class="p">:</span> <span class="kt">ObservationServer</span><span class="p">?</span>
 
-    convenience init(server: ObservationServer) {
-        self.init()
-        self.server = server
-    }
+    <span class="n">convenience</span> <span class="nf">init</span><span class="p">(</span><span class="nv">server</span><span class="p">:</span> <span class="kt">ObservationServer</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">self</span><span class="o">.</span><span class="nf">init</span><span class="p">()</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">server</span> <span class="o">=</span> <span class="n">server</span>
+    <span class="p">}</span>
 
-    func processJob(_ job: ObservationUploadJob, completion: @escaping ((ObservationUploadJob, Error?) -&gt; Void)) {
-        guard let data = job.data else {
-            fatalError("No data was found in Job, and thus we cannot upload the Observation to the server. Removing job from queue.")
-        }
+    <span class="kd">func</span> <span class="nf">processJob</span><span class="p">(</span><span class="n">_</span> <span class="nv">job</span><span class="p">:</span> <span class="kt">ObservationUploadJob</span><span class="p">,</span> <span class="nv">completion</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">((</span><span class="kt">ObservationUploadJob</span><span class="p">,</span> <span class="kt">Error</span><span class="p">?)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">))</span> <span class="p">{</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">data</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">data</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nf">fatalError</span><span class="p">(</span><span class="s">"No data was found in Job, and thus we cannot upload the Observation to the server. Removing job from queue."</span><span class="p">)</span>
+        <span class="p">}</span>
 
-        guard let action = job.uploadAction else {
-            fatalError("Could not determine the job's upload action `\(job.action)`. This seems like a bug.")
-        }
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">action</span> <span class="o">=</span> <span class="n">job</span><span class="o">.</span><span class="n">uploadAction</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nf">fatalError</span><span class="p">(</span><span class="s">"Could not determine the job's upload action `</span><span class="se">\(</span><span class="n">job</span><span class="o">.</span><span class="n">action</span><span class="se">)</span><span class="s">`. This seems like a bug."</span><span class="p">)</span>
+        <span class="p">}</span>
 
-        var observation: Observation!
-        do {
-            observation = try JSONDecoder().decode(Observation.self, from: data)
-        } catch let error {
-            fatalError("Failed to deserialize the FHIR Observation from the ObservationUploadJob. This seems like a bug: \(error)")
-        }
+        <span class="k">var</span> <span class="nv">observation</span><span class="p">:</span> <span class="kt">Observation</span><span class="o">!</span>
+        <span class="k">do</span> <span class="p">{</span>
+            <span class="n">observation</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">JSONDecoder</span><span class="p">()</span><span class="o">.</span><span class="nf">decode</span><span class="p">(</span><span class="kt">Observation</span><span class="o">.</span><span class="k">self</span><span class="p">,</span> <span class="nv">from</span><span class="p">:</span> <span class="n">data</span><span class="p">)</span>
+        <span class="p">}</span> <span class="k">catch</span> <span class="k">let</span> <span class="nv">error</span> <span class="p">{</span>
+            <span class="nf">fatalError</span><span class="p">(</span><span class="s">"Failed to deserialize the FHIR Observation from the ObservationUploadJob. This seems like a bug: </span><span class="se">\(</span><span class="n">error</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+        <span class="p">}</span>
 
-        firstly {
-            serverAction(action, forObservation: observation)
-        }.done { Observations in
-            completion(job, nil)
-        }.catch { error in
-            completion(job, error)
-        }
-    }
+        <span class="n">firstly</span> <span class="p">{</span>
+            <span class="nf">serverAction</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="nv">forObservation</span><span class="p">:</span> <span class="n">observation</span><span class="p">)</span>
+        <span class="p">}</span><span class="o">.</span><span class="n">done</span> <span class="p">{</span> <span class="kt">Observations</span> <span class="k">in</span>
+            <span class="nf">completion</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+        <span class="p">}</span><span class="o">.</span><span class="k">catch</span> <span class="p">{</span> <span class="n">error</span> <span class="k">in</span>
+            <span class="nf">completion</span><span class="p">(</span><span class="n">job</span><span class="p">,</span> <span class="n">error</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
 
-    func serverAction(_ action: ObservationUploadAction, forObservation Observation: Observation) -&gt; Promise&lt;[Observation]&gt; {
-        guard let server = server else {
-            fatalError("No ObservationServer was set on the ObservationUploadQueueProcesser prior to it being started. This is a bug.")
-        }
+    <span class="kd">func</span> <span class="nf">serverAction</span><span class="p">(</span><span class="n">_</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">ObservationUploadAction</span><span class="p">,</span> <span class="n">forObservation</span> <span class="kt">Observation</span><span class="p">:</span> <span class="kt">Observation</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Promise</span><span class="o">&lt;</span><span class="p">[</span><span class="kt">Observation</span><span class="p">]</span><span class="o">&gt;</span> <span class="p">{</span>
+        <span class="k">guard</span> <span class="k">let</span> <span class="nv">server</span> <span class="o">=</span> <span class="n">server</span> <span class="k">else</span> <span class="p">{</span>
+            <span class="nf">fatalError</span><span class="p">(</span><span class="s">"No ObservationServer was set on the ObservationUploadQueueProcesser prior to it being started. This is a bug."</span><span class="p">)</span>
+        <span class="p">}</span>
 
-        switch action {
-        case .create: return server.create(Observations: [Observation])
-        case .update: return server.update(Observations: [Observation])
-        case .delete: return server.delete(Observations: [Observation])
-        }
-    }
-}
+        <span class="k">switch</span> <span class="n">action</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">create</span><span class="p">:</span> <span class="k">return</span> <span class="n">server</span><span class="o">.</span><span class="nf">create</span><span class="p">(</span><span class="kt">Observations</span><span class="p">:</span> <span class="p">[</span><span class="kt">Observation</span><span class="p">])</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">update</span><span class="p">:</span> <span class="k">return</span> <span class="n">server</span><span class="o">.</span><span class="nf">update</span><span class="p">(</span><span class="kt">Observations</span><span class="p">:</span> <span class="p">[</span><span class="kt">Observation</span><span class="p">])</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">delete</span><span class="p">:</span> <span class="k">return</span> <span class="n">server</span><span class="o">.</span><span class="nf">delete</span><span class="p">(</span><span class="kt">Observations</span><span class="p">:</span> <span class="p">[</span><span class="kt">Observation</span><span class="p">])</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre>
 
 <p>The above processor attempts to invoke the appropriate function on some mythical <code>ObservationServer</code>, which notifies the queue of whether or not it was successful. That&rsquo;s it!</p>
 
 <p>You can assign a <code><a href="Classes/JobQueue.html">JobQueue</a></code> any <code><a href="Protocols/JobProcessor.html">JobProcessor</a></code> which processes the same type of job as the <code><a href="Classes/JobQueue.html">JobQueue</a></code>. </p>
-<pre class="highlight plaintext"><code>import Foundation
-import Cute
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">Foundation</span>
+<span class="kd">import</span> <span class="kt">Cute</span>
 
-let name = "Observation Upload Queue"
-let persister = FileBasedPersister(handling: ObservationUploadJob.self,
-                                   queueName: name)
-let observationUploadQueue = try JobQueue(handling: ObservationUploadJob.self,
-                                      name: name,
-                                      persister: persister)
-observationUploadQueue.processor = AnyJobProcessor(ObservationUploadJobProcessor(server: MyObservationServer())
+<span class="k">let</span> <span class="nv">name</span> <span class="o">=</span> <span class="s">"Observation Upload Queue"</span>
+<span class="k">let</span> <span class="nv">persister</span> <span class="o">=</span> <span class="kt">FileBasedPersister</span><span class="p">(</span><span class="nv">handling</span><span class="p">:</span> <span class="kt">ObservationUploadJob</span><span class="o">.</span><span class="k">self</span><span class="p">,</span>
+                                   <span class="nv">queueName</span><span class="p">:</span> <span class="n">name</span><span class="p">)</span>
+<span class="k">let</span> <span class="nv">observationUploadQueue</span> <span class="o">=</span> <span class="k">try</span> <span class="kt">JobQueue</span><span class="p">(</span><span class="nv">handling</span><span class="p">:</span> <span class="kt">ObservationUploadJob</span><span class="o">.</span><span class="k">self</span><span class="p">,</span>
+                                      <span class="nv">name</span><span class="p">:</span> <span class="n">name</span><span class="p">,</span>
+                                      <span class="nv">persister</span><span class="p">:</span> <span class="n">persister</span><span class="p">)</span>
+<span class="n">observationUploadQueue</span><span class="o">.</span><span class="n">processor</span> <span class="o">=</span> <span class="kt">AnyJobProcessor</span><span class="p">(</span><span class="kt">ObservationUploadJobProcessor</span><span class="p">(</span><span class="nv">server</span><span class="p">:</span> <span class="kt">MyObservationServer</span><span class="p">())</span>
 </code></pre>
 
 <p>However, recall that <code><a href="Classes/JobQueue.html">JobQueue</a></code> have <code>start</code> and <code>stop</code> methods. These methods control whether or not a <code><a href="Classes/JobQueue.html">JobQueue</a></code> will forward its jobs to the assigned JobProcessor. </p>
-<pre class="highlight plaintext"><code>...
-observationUploadQueue.processor = AnyJobProcessor(ObservationUploadJobProcessor(server: MyObservationServer())
-observationUploadQueue.start()
+<pre class="highlight swift"><code><span class="o">...</span>
+<span class="n">observationUploadQueue</span><span class="o">.</span><span class="n">processor</span> <span class="o">=</span> <span class="kt">AnyJobProcessor</span><span class="p">(</span><span class="kt">ObservationUploadJobProcessor</span><span class="p">(</span><span class="nv">server</span><span class="p">:</span> <span class="kt">MyObservationServer</span><span class="p">())</span>
+<span class="n">observationUploadQueue</span><span class="o">.</span><span class="nf">start</span><span class="p">()</span>
 </code></pre>
 
 <p>By calling <code>start</code> above, we tell our ObservationUploadQueue to start forwarding jobs to the assigned <code><a href="Protocols/JobProcessor.html">JobProcessor</a></code>. The queue will continue to send jobs to the processor until the queue is empty, after which any new jobs that were added to the queue will also be forwarded to the processor.</p>
 
 <p>Conversely, we can tell the queue to stop sending jobs to its assigned processor by calling the queue&rsquo;s <code>stop</code> method.</p>
-<pre class="highlight plaintext"><code>...
-observationUploadQueue.stop()
+<pre class="highlight swift"><code><span class="o">...</span>
+<span class="n">observationUploadQueue</span><span class="o">.</span><span class="nf">stop</span><span class="p">()</span>
 </code></pre>
 
 <p>When called, the <code>stop</code> function will waiting until the current processing job is completed, afterwhich no more jobs will be sent to the assigned processor until <code>start</code> is called.</p>
@@ -398,7 +398,7 @@ observationUploadQueue.stop()
 
 <p>When a <code><a href="Classes/JobQueue.html">JobQueue</a></code> forwards a job to a <code><a href="Protocols/JobProcessor.html">JobProcessor</a></code> for processing, the <code><a href="Classes/JobQueue.html">JobQueue</a></code> will first <em><code>remove()</code></em> that job from the queue. Any jobs that fail to process, by default, <em>will not be re-added to the queue</em>. However, <code><a href="Classes/JobQueue.html">JobQueue</a></code>s <em>do</em> provide a means of re-trying a failed job using a <code><a href="Protocols/JobRetryStrategy.html">JobRetryStrategy&lt;QueueJob&gt;</a></code>.</p>
 
-<p>&ldquo;`Swift 4
+<p>&ldquo;`swift 4
 public protocol JobRetryStrategy {</p>
 <pre class="highlight plaintext"><code>/// Instructs how to retry the failed `job` on the provided `queue`
 ///
@@ -436,7 +436,7 @@ The `BackoffRetryStrategy` accomplishes the above by performing the following st
 
 You can define a re-try strategy for a `JobQueue` by assigning it's `retryStrategy` property to an instance of anything that conforms to the `JobRetryStrategy` protocol.
 
-```Swift
+```swift
 observationUploadQueue.retryStrategy = BackoffRetryStrategy(maxBackoff: 60*60) // waits a max 1 hour
 </code></pre>
 <h3 id='observing-jobqueues' class='heading'>Observing JobQueues</h3>
@@ -452,20 +452,20 @@ observationUploadQueue.retryStrategy = BackoffRetryStrategy(maxBackoff: 60*60) /
 </ul>
 
 <p>An observer receives a notification by calling a <code><a href="Classes/JobQueue.html">JobQueue</a></code>&lsquo;s <code>observe</code> function and passing it a block. </p>
-<pre class="highlight plaintext"><code>let token = observationUploadQueue.observe { queue, jobs, event in
-    switch event {
-        case .added: 
-            print("\(jobs) were added to queue \(queue)")
-        case .removed:
-            print("\(jobs) were removed from queue \(queue)")
-        case .cancelled:
-            print("\(jobs) were cancelled in queue \(queue)")
-        case .processed:
-            print("\(jobs) successfully processed on queue \(queue)")
-        case .failedToProcess:
-            print("\(jobs) failed to process on queue \(queue)")
-    }
-}
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">token</span> <span class="o">=</span> <span class="n">observationUploadQueue</span><span class="o">.</span><span class="n">observe</span> <span class="p">{</span> <span class="n">queue</span><span class="p">,</span> <span class="n">jobs</span><span class="p">,</span> <span class="n">event</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">event</span> <span class="p">{</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">added</span><span class="p">:</span> 
+            <span class="nf">print</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">jobs</span><span class="se">)</span><span class="s"> were added to queue </span><span class="se">\(</span><span class="n">queue</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">removed</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">jobs</span><span class="se">)</span><span class="s"> were removed from queue </span><span class="se">\(</span><span class="n">queue</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">cancelled</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">jobs</span><span class="se">)</span><span class="s"> were cancelled in queue </span><span class="se">\(</span><span class="n">queue</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">processed</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">jobs</span><span class="se">)</span><span class="s"> successfully processed on queue </span><span class="se">\(</span><span class="n">queue</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+        <span class="k">case</span> <span class="o">.</span><span class="nv">failedToProcess</span><span class="p">:</span>
+            <span class="nf">print</span><span class="p">(</span><span class="s">"</span><span class="se">\(</span><span class="n">jobs</span><span class="se">)</span><span class="s"> failed to process on queue </span><span class="se">\(</span><span class="n">queue</span><span class="se">)</span><span class="s">"</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
 </code></pre>
 
 <p>The <code>observe</code> function returns a <em>weak</em> <code><a href="Classes.html#/s:4Cute25JobQueueNotificationTokenC">JobQueueNotificationToken</a></code> which must be strongly retained. As soon as the token goes out of scop,e the <code><a href="Classes/JobQueue.html">JobQueue</a></code> will stop sending notifications to that observer.</p>
