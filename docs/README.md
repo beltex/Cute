@@ -39,11 +39,6 @@ First thing first, you need to "install" it. You have 2 options: `Carthage` and 
 ## Using Cute
 Cute attempts to make things as simple as possible for queing and processing jobs. It attempts to make no assumptions about how you use queues, including whether or not you wish to process the queues automagically. Cute is, ultimately, pretty stupid.
 
-We will build up a JobQueue, step by step, but first - a diagram!
-
-
-[Insert a diagram here]
-
 ### JobQueues and QueueJobs
 Well, the naming sucks, but here's what they are:
 
