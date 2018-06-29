@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C263A58920CC267700F92A5C"
-               BuildableName = "Cute_iOS.framework"
-               BlueprintName = "Cute-iOS"
+               BlueprintIdentifier = "7D37F10220E6610700CAD5B3"
+               BuildableName = "Cute_macOS.framework"
+               BlueprintName = "Cute-macOS"
                ReferencedContainer = "container:Cute.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -26,16 +26,15 @@
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      codeCoverageEnabled = "YES"
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C263A59220CC267700F92A5C"
-               BuildableName = "CuteTests.xctest"
-               BlueprintName = "CuteTests"
+               BlueprintIdentifier = "7D37F10A20E6610700CAD5B3"
+               BuildableName = "Cute-macOSTests.xctest"
+               BlueprintName = "Cute-macOSTests"
                ReferencedContainer = "container:Cute.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -43,9 +42,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C263A58920CC267700F92A5C"
-            BuildableName = "Cute_iOS.framework"
-            BlueprintName = "Cute-iOS"
+            BlueprintIdentifier = "7D37F10220E6610700CAD5B3"
+            BuildableName = "Cute_macOS.framework"
+            BlueprintName = "Cute-macOS"
             ReferencedContainer = "container:Cute.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -65,9 +64,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C263A58920CC267700F92A5C"
-            BuildableName = "Cute_iOS.framework"
-            BlueprintName = "Cute-iOS"
+            BlueprintIdentifier = "7D37F10220E6610700CAD5B3"
+            BuildableName = "Cute_macOS.framework"
+            BlueprintName = "Cute-macOS"
             ReferencedContainer = "container:Cute.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -83,9 +82,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C263A58920CC267700F92A5C"
-            BuildableName = "Cute_iOS.framework"
-            BlueprintName = "Cute-iOS"
+            BlueprintIdentifier = "7D37F10220E6610700CAD5B3"
+            BuildableName = "Cute_macOS.framework"
+            BlueprintName = "Cute-macOS"
             ReferencedContainer = "container:Cute.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
