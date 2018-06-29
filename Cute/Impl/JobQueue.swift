@@ -229,6 +229,7 @@ extension JobQueue {
         queueDispatch.async(flags: .barrier) { [weak self] in
             let jobs = self?.jobs
             self?.jobs.removeAll()
+            self?.persister?.clear()
             
             if jobs != nil {
                 self?.notifyObserversThatQueue(.removed, jobs: jobs!)
@@ -254,7 +255,10 @@ extension JobQueue {
         case .stopping, .stopped:
             break // do nothing, already shutting down
         
-        case .processing, .listening, .starting:
+        case .listening:
+            state = .stopped
+            
+        case .processing, .starting:
             state = .stopping
         }
     }

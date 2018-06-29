@@ -62,7 +62,7 @@ public class AnyJobPersister<HandlingJob: QueueJob>: JobPersister {
     /// Deletes all jobs from the persisted location using the internal `JobPersister`
     ///
     /// - Parameter completion: An optional callback to be called after the clearing has completed.
-    public func clear(completion: ((Error?) -> Void)?) {
+    public func clear(completion: ((Error?) -> Void)? = nil) {
         _clear(completion)
     }
 }

@@ -51,11 +51,13 @@ class JobQueueTests: QuickSpec {
                 q.start()
                 q.add(jobs)
                 expect(q.count).toEventually(equal(jobs.count))
+                
                 q.stop()
+                expect(q.state) == JobQueue.State.stopped
                 q.drain()
                 q.start()
-                expect(q.count).toEventually(equal(0))
                 expect(q.state).toEventually(equal(JobQueue.State.listening))
+                expect(q.count).toEventually(equal(0))
             }
             
             it("adds the jobs in order") {
