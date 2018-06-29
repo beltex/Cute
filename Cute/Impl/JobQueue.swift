@@ -242,7 +242,7 @@ extension JobQueue {
     
     /// Tells this `JobQueue` to start processing its `Job`s
     public func start() {
-        if state == .stopped {
+        if state == .stopping || state == .stopped {
             state = .starting
             processJobs()
         }

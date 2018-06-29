@@ -34,6 +34,30 @@ class JobQueueTests: QuickSpec {
                 expect(q.state) == JobQueue.State.stopped
             }
             
+            it("can start when stopped") {
+                q.start()
+                expect(q.state).toEventually(equal(JobQueue.State.listening))
+            }
+            
+            it("can start when stopping") {
+                q.start()
+                expect(q.state).toEventually(equal(JobQueue.State.listening))
+                q.stop()
+                q.start()
+                expect(q.state).toEventually(equal(JobQueue.State.listening))
+            }
+            
+            it("can be restarted") {
+                q.start()
+                q.add(jobs)
+                expect(q.count).toEventually(equal(jobs.count))
+                q.stop()
+                q.drain()
+                q.start()
+                expect(q.count).toEventually(equal(0))
+                expect(q.state).toEventually(equal(JobQueue.State.listening))
+            }
+            
             it("adds the jobs in order") {
                 q.add(jobs)
                 
