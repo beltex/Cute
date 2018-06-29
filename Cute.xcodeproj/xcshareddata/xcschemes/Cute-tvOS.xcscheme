@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7D37F0E620E6609600CAD5B3"
-               BuildableName = "Cute_tvOS.framework"
+               BuildableName = "Cute.framework"
                BlueprintName = "Cute-tvOS"
                ReferencedContainer = "container:Cute.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7D37F0E620E6609600CAD5B3"
-            BuildableName = "Cute_tvOS.framework"
+            BuildableName = "Cute.framework"
             BlueprintName = "Cute-tvOS"
             ReferencedContainer = "container:Cute.xcodeproj">
          </BuildableReference>
@@ -65,7 +65,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7D37F0E620E6609600CAD5B3"
-            BuildableName = "Cute_tvOS.framework"
+            BuildableName = "Cute.framework"
             BlueprintName = "Cute-tvOS"
             ReferencedContainer = "container:Cute.xcodeproj">
          </BuildableReference>
@@ -83,7 +83,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7D37F0E620E6609600CAD5B3"
-            BuildableName = "Cute_tvOS.framework"
+            BuildableName = "Cute.framework"
             BlueprintName = "Cute-tvOS"
             ReferencedContainer = "container:Cute.xcodeproj">
          </BuildableReference>

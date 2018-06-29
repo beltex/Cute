@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7D37F10220E6610700CAD5B3"
-               BuildableName = "Cute_macOS.framework"
+               BuildableName = "Cute.framework"
                BlueprintName = "Cute-macOS"
                ReferencedContainer = "container:Cute.xcodeproj">
             </BuildableReference>
@@ -33,7 +33,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "7D37F10A20E6610700CAD5B3"
-               BuildableName = "Cute-macOSTests.xctest"
+               BuildableName = "CuteTests.xctest"
                BlueprintName = "Cute-macOSTests"
                ReferencedContainer = "container:Cute.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7D37F10220E6610700CAD5B3"
-            BuildableName = "Cute_macOS.framework"
+            BuildableName = "Cute.framework"
             BlueprintName = "Cute-macOS"
             ReferencedContainer = "container:Cute.xcodeproj">
          </BuildableReference>
@@ -65,7 +65,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7D37F10220E6610700CAD5B3"
-            BuildableName = "Cute_macOS.framework"
+            BuildableName = "Cute.framework"
             BlueprintName = "Cute-macOS"
             ReferencedContainer = "container:Cute.xcodeproj">
          </BuildableReference>
@@ -83,7 +83,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "7D37F10220E6610700CAD5B3"
-            BuildableName = "Cute_macOS.framework"
+            BuildableName = "Cute.framework"
             BlueprintName = "Cute-macOS"
             ReferencedContainer = "container:Cute.xcodeproj">
          </BuildableReference>
