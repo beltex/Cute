@@ -29,19 +29,19 @@ class FileBasedPersisterTests: QuickSpec {
             }
             
             it("persists at the expected location") {
-                expect(persister.persistenceLocation.contains("Cute/Queues/MyTestQueue")) == true
+                expect(persister.persistenceLocation.path.contains("Cute/Queues/MyTestQueue")) == true
             }
             
             it("can persist jobs") {
                 try! persister.persist([TestJob()])
-                expect(try? FileManager.default.contentsOfDirectory(atPath: persister.persistenceLocation).count) == 1
+                expect(try? FileManager.default.contentsOfDirectory(atPath: persister.persistenceLocation.path).count) == 1
             }
             
             it("can remove a job") {
                 let job = TestJob()
                 try! persister.persist([job])
                 try! persister.delete(job)
-                expect(try? FileManager.default.contentsOfDirectory(atPath: persister.persistenceLocation).count) == 0
+                expect(try? FileManager.default.contentsOfDirectory(atPath: persister.persistenceLocation.path).count) == 0
             }
             
             it("can load jobs") {
@@ -67,10 +67,10 @@ class FileBasedPersisterTests: QuickSpec {
                 }.toNot(throwError())
                 
                 // sanity check
-                expect(try? FileManager.default.contentsOfDirectory(atPath: persister.persistenceLocation).count) > 0
+                expect(try? FileManager.default.contentsOfDirectory(atPath: persister.persistenceLocation.path).count) > 0
                 
                 waitUntil { done in persister.clear { _ in done() } }
-                expect(try? FileManager.default.contentsOfDirectory(atPath: persister.persistenceLocation).count) == 0
+                expect(try? FileManager.default.contentsOfDirectory(atPath: persister.persistenceLocation.path).count) == 0
             }
             
         }
