@@ -30,7 +30,7 @@ public class FileBasedPersister<HandlingJob: QueueJob>: JobPersister {
         let fm = fileManager
 
         guard let dir = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
-            fatalError("Could not get applicatinSupportDirectory for current user.")
+            fatalError("Could not get applicationSupportDirectory for current user.")
         }
 
         let path: URL = dir.appendingPathComponent("Cute/Queues/\(queueName)", isDirectory: true)
@@ -42,7 +42,7 @@ public class FileBasedPersister<HandlingJob: QueueJob>: JobPersister {
             fatalError("Unable to create directory: \(error)")
         }
 
-        print("QueueJobs will be persisted at \(path.absoluteString)")
+        print("QueueJobs will be persisted at \(path.path)")
         return path
     }()
 
