@@ -1,4 +1,5 @@
 # Cute
+[![Build Status](https://app.bitrise.io/app/fc09508445192588/status.svg?token=XS8CTo_0cfN7pcTEVz7j7g&branch=master)](https://app.bitrise.io/app/fc09508445192588)
 ## A simple way to create, process, and observe Queues in Swift
 Ah, queing. Everything will eventually need it. While iOS offers `NSOperation` and `NSOperationQueue`, in my experience they are messy, confusing, difficult to use, and not very portable. `Cute` attempts to solve that problem by implementing a basic, thread-safe and type-safe Queue structure, complete with type-safe processing, observing, and persistence. `Cute` is composable, portable, and easy to use.
 
