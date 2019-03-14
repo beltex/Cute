@@ -229,10 +229,15 @@ extension JobQueue {
         queueDispatch.async(flags: .barrier) { [weak self] in
             let jobs = self?.jobs
             self?.jobs.removeAll()
-            self?.persister?.clear()
+            do {
+                try self?.persister?.clear()
+            } catch let error {
+                // note: unable to throw from within a dispatched block, so this will have to do
+                print("Error: Unable to clear persistent files: \(error)")
+            }
             
-            if jobs != nil {
-                self?.notifyObserversThatQueue(.removed, jobs: jobs!)
+            if let jobs = jobs {
+                self?.notifyObserversThatQueue(.removed, jobs: jobs)
             }
         }
     }

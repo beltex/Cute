@@ -234,6 +234,7 @@ class JobQueueTests: QuickSpec {
                     token = q.observe { observationBlock($0, $1, $2) }
                     q.add(jobs)
                     
+                    expect(token).toEventuallyNot(beNil())
                     expect(observation).toEventuallyNot(beNil())
                     expect(observation?.queue).toEventuallyNot(beNil())
                     expect(observation?.jobs).toEventually(equal(jobs))

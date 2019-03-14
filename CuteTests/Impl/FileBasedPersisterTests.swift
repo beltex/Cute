@@ -21,7 +21,7 @@ class FileBasedPersisterTests: QuickSpec {
             
             afterEach {
                 waitUntil(timeout: 5) { done in
-                    persister.clear { error in
+                    try? persister.clear { error in
                         if let err = error { print(err) }
                         done()
                     }
@@ -69,7 +69,7 @@ class FileBasedPersisterTests: QuickSpec {
                 // sanity check
                 expect(try? FileManager.default.contentsOfDirectory(atPath: persister.persistenceLocation.path).count) > 0
                 
-                waitUntil { done in persister.clear { _ in done() } }
+                waitUntil { done in try? persister.clear { _ in done() } }
                 expect(try? FileManager.default.contentsOfDirectory(atPath: persister.persistenceLocation.path).count) == 0
             }
             

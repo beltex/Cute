@@ -90,15 +90,7 @@ public class FileBasedPersister<HandlingJob: QueueJob>: JobPersister {
     public func load() throws -> [HandlingJob] {
         let decoder = JSONDecoder()
         let jobs: [HandlingJob] = try fileManager.contentsOfDirectory(at: persistenceLocation, includingPropertiesForKeys: [], options: .skipsSubdirectoryDescendants).compactMap { path in
-
-            let data: Data
-            do {
-                data = try Data(contentsOf: path)
-            } catch {
-                print("Warning: Unable to parse: \(path.path)")
-                return nil
-            }
-
+            let data = try Data(contentsOf: path)
             return try decoder.decode(Job.self, from: data)
         }
         
@@ -108,15 +100,9 @@ public class FileBasedPersister<HandlingJob: QueueJob>: JobPersister {
     /// Clears all persisted jobs from disk
     ///
     /// - Parameter completion: The block to call after the attempt to clear all jobs is complete.
-    public func clear(completion: ((Error?) -> Void)?) {
+    public func clear(completion: ((Error?) -> Void)?) throws {
 
-        let files: [URL]
-        do {
-            files = try fileManager.contentsOfDirectory(at: persistenceLocation, includingPropertiesForKeys: [], options: .skipsSubdirectoryDescendants)
-        } catch {
-            // a directory that cannot be read is almost the same as an empty directory, right? I think it's safe to ignore
-            files = []
-        }
+        let files = try fileManager.contentsOfDirectory(at: persistenceLocation, includingPropertiesForKeys: [], options: .skipsSubdirectoryDescendants)
 
         files.forEach {
             do {
