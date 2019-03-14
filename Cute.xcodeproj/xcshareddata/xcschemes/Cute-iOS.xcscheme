@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "C263A58920CC267700F92A5C"
-               BuildableName = "Cute_iOS.framework"
+               BuildableName = "Cute.framework"
                BlueprintName = "Cute-iOS"
                ReferencedContainer = "container:Cute.xcodeproj">
             </BuildableReference>
@@ -44,7 +44,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C263A58920CC267700F92A5C"
-            BuildableName = "Cute_iOS.framework"
+            BuildableName = "Cute.framework"
             BlueprintName = "Cute-iOS"
             ReferencedContainer = "container:Cute.xcodeproj">
          </BuildableReference>
@@ -66,7 +66,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C263A58920CC267700F92A5C"
-            BuildableName = "Cute_iOS.framework"
+            BuildableName = "Cute.framework"
             BlueprintName = "Cute-iOS"
             ReferencedContainer = "container:Cute.xcodeproj">
          </BuildableReference>
@@ -84,7 +84,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "C263A58920CC267700F92A5C"
-            BuildableName = "Cute_iOS.framework"
+            BuildableName = "Cute.framework"
             BlueprintName = "Cute-iOS"
             ReferencedContainer = "container:Cute.xcodeproj">
          </BuildableReference>
