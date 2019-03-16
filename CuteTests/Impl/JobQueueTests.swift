@@ -49,15 +49,12 @@ class JobQueueTests: QuickSpec {
             
             it("can be restarted") {
                 q.start()
-                q.add(jobs)
-                expect(q.count).toEventually(equal(jobs.count))
-                
+                expect(q.state).toEventually(equal(JobQueue.State.listening))
                 q.stop()
-                expect(q.state) == JobQueue.State.stopped
+                expect(q.state).toEventually(equal(JobQueue.State.stopped), timeout: 3)
                 q.drain()
                 q.start()
                 expect(q.state).toEventually(equal(JobQueue.State.listening))
-                expect(q.count).toEventually(equal(0))
             }
             
             it("adds the jobs in order") {
