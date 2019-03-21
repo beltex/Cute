@@ -34,6 +34,8 @@ class MaxRetryStrategySpec: QuickSpec {
                         retryMap[job.id] = (retryMap[job.id] ?? 0) + 1
                     }
                 }
+
+                expect(token).toNot(beNil()) // just to prevent a warning about token not being read
                 
                 let jobs = (0..<3).map { _ in TestJob() }
                 fixture.queue.add(jobs)

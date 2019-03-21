@@ -36,5 +36,5 @@ public protocol JobPersister: class {
     /// Deletes all jobs from the persisted location.
     ///
     /// - Parameter completion: An optional callback to be called after the clearing has completed.
-    func clear(completion: ((Error?) -> Void)?) -> Void
+    func clear(completion: ((Error?) -> Void)?) throws -> Void
 }

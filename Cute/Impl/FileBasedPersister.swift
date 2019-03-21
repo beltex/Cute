@@ -13,8 +13,8 @@ import Foundation
 public class FileBasedPersister<HandlingJob: QueueJob>: JobPersister {
     typealias Job = HandlingJob
     
-    private var queueName: String
-    
+    private let queueName: String
+
     /// Creates a name for the given job, based on the job's `id` and `createdDate`.
     ///
     /// - Parameter job: The job from which a filename will be generated
@@ -26,29 +26,29 @@ public class FileBasedPersister<HandlingJob: QueueJob>: JobPersister {
     }
     
     /// Provides the path to where this Persister is performing its IO.
-    public var persistenceLocation: String {
-        return fileManager.currentDirectoryPath
-    }
-    
-    /// The file manager this Persister will use for all Job IO.
-    lazy private var fileManager: FileManager = {
-        let fm = FileManager()
-        
+    lazy public var persistenceLocation: URL = {
+        let fm = fileManager
+
         guard let dir = fm.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else {
-            fatalError("Could not get applicatinSupportDirectory for current user.")
+            fatalError("Could not get applicationSupportDirectory for current user.")
         }
-        
-        let path = dir.appendingPathComponent("Cute/Queues/\(queueName)", isDirectory: true)
-        
-        if !fm.fileExists(atPath: path.absoluteString) {
-            try! fm.createDirectory(at: path, withIntermediateDirectories: true)
+
+        let path: URL = dir.appendingPathComponent("Cute/Queues/\(queueName)", isDirectory: true)
+
+        // note: Apple recommends not checking for the existence of the directory and just creating it instead
+        do {
+            try fm.createDirectory(at: path, withIntermediateDirectories: true)
+        } catch let error {
+            fatalError("Unable to create directory: \(error)")
         }
-        
-        fm.changeCurrentDirectoryPath(path.path)
-        print("QueueJobs will be persisted at \(fm.currentDirectoryPath)")
-        return fm
+
+        print("QueueJobs will be persisted at \(path.path)")
+        return path
     }()
-    
+
+    /// The file manager this Persister will use for all Job IO.
+    private var fileManager = FileManager()
+
     /// Initializes this JobPersister
     ///
     /// - Parameters:
@@ -66,7 +66,10 @@ public class FileBasedPersister<HandlingJob: QueueJob>: JobPersister {
         let encoder = JSONEncoder()
         
         for j in jobs {
-            fileManager.createFile(atPath: makeFileName(forJob: j), contents: try encoder.encode(j))
+            var path = persistenceLocation
+            path.appendPathComponent(makeFileName(forJob: j), isDirectory: false)
+            let data = try encoder.encode(j)
+            try data.write(to: path)
         }
     }
     
@@ -75,8 +78,9 @@ public class FileBasedPersister<HandlingJob: QueueJob>: JobPersister {
     /// - Parameter job: The job whose persisted file is to be deleted
     /// - Throws: An error if the job's persiste file fails to delete.
     public func delete(_ job: HandlingJob) throws {
-        let file = makeFileName(forJob: job)
-        if fileManager.fileExists(atPath: file) { try fileManager.removeItem(atPath: file) }
+        var path = persistenceLocation
+        path.appendPathComponent(makeFileName(forJob: job))
+        try fileManager.removeItem(at: path)
     }
     
     /// Loads all jobs from file in the correct order
@@ -85,13 +89,9 @@ public class FileBasedPersister<HandlingJob: QueueJob>: JobPersister {
     /// - Throws: An error if any of the jobs failed to load from disk.
     public func load() throws -> [HandlingJob] {
         let decoder = JSONDecoder()
-        let jobs: [HandlingJob] = try fileManager.contentsOfDirectory(atPath: ".").sorted().compactMap { path in
-            if let data = fileManager.contents(atPath: path) {
-                print("loading job at \(path)")
-                return try decoder.decode(Job.self, from: data)
-            }
-            
-            return nil
+        let jobs: [HandlingJob] = try fileManager.contentsOfDirectory(at: persistenceLocation, includingPropertiesForKeys: [], options: .skipsSubdirectoryDescendants).compactMap { path in
+            let data = try Data(contentsOf: path)
+            return try decoder.decode(Job.self, from: data)
         }
         
         return jobs.sorted { left, right in left.createdDate < right.createdDate }
@@ -100,16 +100,18 @@ public class FileBasedPersister<HandlingJob: QueueJob>: JobPersister {
     /// Clears all persisted jobs from disk
     ///
     /// - Parameter completion: The block to call after the attempt to clear all jobs is complete.
-    public func clear(completion: ((Error?) -> Void)?) {
-        do {
-            let path = fileManager.currentDirectoryPath
-            try fileManager.removeItem(atPath: path)
-            try fileManager.createDirectory(atPath: path, withIntermediateDirectories: true)
-            fileManager.changeCurrentDirectoryPath(path)
-        } catch let error {
-            completion?(error)
+    public func clear(completion: ((Error?) -> Void)?) throws {
+
+        let files = try fileManager.contentsOfDirectory(at: persistenceLocation, includingPropertiesForKeys: [], options: .skipsSubdirectoryDescendants)
+
+        files.forEach {
+            do {
+                try fileManager.removeItem(at: $0)
+            } catch let error {
+                completion?(error)
+            }
         }
-        
+
         completion?(nil)
     }
 }
