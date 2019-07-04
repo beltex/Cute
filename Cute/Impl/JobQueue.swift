@@ -189,13 +189,7 @@ extension JobQueue {
         return queueDispatch.sync(flags: .barrier) { [weak self] in
             guard (self?.jobs.count ?? 0) > 0 else { return nil }
             guard let job = self?.jobs.removeFirst() else { return nil }
-            
-            do {
-                try self?.persister?.delete(job)
-            } catch let error {
-                print("Removed job from queue, but failed to remove job from from persisted source: \(error)")
-            }
-            
+
             notifyObserversThatQueue(.removed, jobs: [job])
             return job
         }
@@ -306,6 +300,7 @@ extension JobQueue {
             processor.processJob(job) { job, error in
                 if error == nil {
                     self?.notifyObserversThatQueue(.processed, jobs: [job])
+                    try? self?.persister?.delete(job)
                 } else {
                     print("Erorr processing job in queue: \(error!)")
                     self?.notifyObserversThatQueue(.failedToProcess, jobs: [job])
@@ -314,6 +309,7 @@ extension JobQueue {
                         strategy.retry(job: job, failedOnQueue: this)
                     } else {
                         print("No retry strategy specified. Job will be removed from queue.")
+                        try? self?.persister?.delete(job)
                     }
                 }
                 
